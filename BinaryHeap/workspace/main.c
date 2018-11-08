@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 /*********************************************************
  * * * * * * * Data Read and Print Functions * * * * * * *
  *********************************************************/
@@ -59,11 +60,11 @@ int checkSort(int *data, int *newData, int size){
     }
     return sort;
 };
-/***********************************************************
- * * * * * * * * * Binomial Heap Functions * * * * * * * * *
- ***********************************************************/
+/*********************************************************
+ * * * * * * * * * Binary Heap Functions * * * * * * * * *
+ *********************************************************/
 int PARENT(int i) {
-	return i/2;
+	return floor((i-1)/2);
 }
 int LEFTchild(int i){
 	return 2*i + 1;
@@ -107,6 +108,9 @@ void BuildMaximalHeap(int *data, int size, int lenMax){ //verified
 		}
 	}
 	else printf("\nError! Size of your heap is 0!");
+}
+void BuildMinimalHeap(){ // To be completed
+
 }
 int REMOVE(int *data, int *size){
 	printf("\nRemoving root element %d from heap\n",data[0]);
