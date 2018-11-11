@@ -24,7 +24,7 @@ void loadFile(int argc, char **argv, FILE *file_input, mydata *input, int *k){
 		} else file_input = stdin;
 		readData (file_input, input, k); input->length = input->size + 5;
 }
-void printRange(dataArray *arr,unsigned long start,unsigned long end){
+void printRange(dataArray *arr,unsigned long int start,unsigned long int end){
 		printf("\n");
 		if (end < arr->size) for( int i = start; i < end; ++i) printf("%d ", arr->data[i]);
 		printf("\n");
@@ -56,17 +56,30 @@ void fromDataToDataArray (mydata *dta, dataArray *arr){
 	arr->size = dta->size;
 	arr->length = dta->length;
 	arr->priority = dta->priority;
+	arr->swaps = 0;
 }
-void copyDataArray (dataArray *copy,dataArray *darr){
+void copyDataArray (dataArray *copy, dataArray *darr){
 	for (int i = 0; i < darr->size; i++){
 		copy->data[i] = darr->data[i];
 	}
 	copy->size = darr->size;
 	copy->length = darr->length;
-	copy->priority = darr->priority;	
+	copy->priority = darr->priority;
+	copy->swaps = 0;	
 }
 void initializeEmpty(dataArray *arr,dataArray *initializer){
-	arr->size = 0;
+	arr->size = 0; 
 	arr->length = initializer->length;
 	arr->priority = initializer->priority;
+	arr->swaps = 0;
+}
+void initializeWith (dataArray *arr, int *input,unsigned long int inSize,unsigned long int inLength,priority_t inPriority){
+	arr->size = inSize; 
+	arr->length = inLength; 
+	arr->priority = max;
+	arr->swaps = 0;
+	for (int i = 0; i<inSize;i++){
+		arr->data[i] = input[i];
+	}
+	
 }

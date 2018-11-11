@@ -2,29 +2,34 @@
 * * * * This file contains the functions sorting * * * *
 * * * * * * * Min to Max and Reversed sort * * * * * * * 
 ********************************************************/
-void swap(int *item_1, int *item_2){ // same as Permut()
-    int temp = *item_1; 
-    *item_1 = *item_2; 
-    *item_2 = temp; 
-}
-int choosePivot (int i,int j ) {
-    return ( (i+j) / 2 );
-}
-void bubbleSort (dataArray *arr) { 
+void bubbleSort (dataArray *arr) { //O(n^2)
    for (int i = 0; i < arr->size-1; i++){
        for (int j = 0; j < arr->size-i-1; j++){
            if ( (arr->priority == max) && (arr->data[j] > arr->data[j+1]) 
              || (arr->priority == min) && (arr->data[j] < arr->data[j+1]) ){
-              swap(&arr->data[j], &arr->data[j+1]);
+              swap(&arr->data[j], &arr->data[j+1],&arr->swaps);
 		   }
 	   }
    }
+}
+void partialBubbleSort (dataArray *arr, int partial){
+    for (int i = 0; i < partial; i++){
+       for (int j = 0; j < arr->size-i-1; j++){
+           if ( (arr->priority == max) && (arr->data[j] > arr->data[j+1]) 
+             || (arr->priority == min) && (arr->data[j] < arr->data[j+1]) ){
+              swap(&arr->data[j], &arr->data[j+1],&arr->swaps);
+		   }
+	   }
+   }
+}
+int choosePivot (int i,int j ) {
+    return ( (i+j) / 2 );
 }
 void quickSort (dataArray *arr,int low,int high) {
     int key,i,j,pivot;
     if( low < high) {
         pivot = choosePivot(low, high);
-        swap(&arr->data[low],&arr->data[pivot]);
+        swap(&arr->data[low],&arr->data[pivot],&arr->swaps);
         key = arr->data[low];
         i = low + 1;
         j = high;
@@ -35,15 +40,21 @@ void quickSort (dataArray *arr,int low,int high) {
             while( (arr->priority == max ) && (arr->data[j] > key) && (j >= low)
                 || (arr->priority == min ) && (arr->data[j] > key) && (j >= low) ) 
                 { j--; }
-            if( i < j) { swap(&arr->data[i],&arr->data[j]); }
+            if( i < j) { swap(&arr->data[i],&arr->data[j],&arr->swaps); }
         }
-        swap(&arr->data[low],&arr->data[j]);
+        swap(&arr->data[low],&arr->data[j],&arr->swaps);
         quickSort(arr,low,j-1);
         quickSort(arr,j+1,high);
     }
 }
-void heapSort () {
 
+void heapSort (dataArray *arr) {
+    BuildHeap(arr);
+    for (int i = 0; i < arr->size; i++) {
+        swap(&arr->data[arr->size-i-1],&arr->data[0],&arr->swaps);
+        PercolateDownOPT(arr, arr->size-i-1, 0);
+        //PercolateDown(arr, arr->size-i-1, 0);
+    }
 }
 void mergeSort () {
 

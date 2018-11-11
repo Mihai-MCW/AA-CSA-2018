@@ -11,6 +11,7 @@ typedef struct {
 typedef struct {
     unsigned long int size;
     unsigned long int length;
+    unsigned long int swaps;
     priority_t priority;
     int data[];
 } dataArray;

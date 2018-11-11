@@ -11,47 +11,66 @@ int LEFTchild(int i){
 int RIGHTchild(int i){
 	return 2*i + 2;
 }
-void Permut(int *item_1, int *item_2){ // same as swap()
-		int temp = *item_1; 
-		*item_1 = *item_2; 
-		*item_2 = temp; 
+void swap(int *item_1, int *item_2, unsigned long int *times){ // same as Permut()
+    int temp = *item_1; 
+    *item_1 = *item_2; 
+    *item_2 = temp;
+    *times = *times +1;
 }
 void PercolateUp(dataArray *arr, int current){
 	int parent = PARENT(current);
 	while ( ((arr->priority == max) && (parent >= 0) && (arr->data[parent] < arr->data[current]))
          || ((arr->priority == min) && (parent >= 0) && (arr->data[parent] > arr->data[current])) ){
-		Permut(&arr->data[current],&arr->data[parent]);
+		swap(&arr->data[current],&arr->data[parent],&arr->swaps);
 		current = parent;
 		parent = PARENT(current);
 	}
 }
-void PercolateDown(dataArray *arr, int current){
-	int left = LEFTchild(current), 
-		right = RIGHTchild(current), 
-		curr_largest = current;
-	if ( ((arr->priority == max) && (left < arr->size) && (arr->data[current] < arr->data[left]))
-      || ((arr->priority == min) && (left < arr->size) && (arr->data[current] > arr->data[left])) ) {
-		curr_largest = left;
+void PercolateDown(dataArray *arr, unsigned long int end, unsigned long int initial){
+	int left = LEFTchild(initial), 
+		right = RIGHTchild(initial), 
+		current = initial;
+	if ( ((arr->priority == max) && (left < end) && (arr->data[initial] < arr->data[left]))
+      || ((arr->priority == min) && (left < end) && (arr->data[initial] > arr->data[left])) ) {
+		current = left;
 	}
-	if ( ((arr->priority == max) && (right < arr->size) && (arr->data[curr_largest] < arr->data[right]))
-      || ((arr->priority == min) && (right < arr->size) && (arr->data[curr_largest] > arr->data[right])) ){
-		curr_largest = right;
+	if ( ((arr->priority == max) && (right < end) && (arr->data[current] < arr->data[right]))
+      || ((arr->priority == min) && (right < end) && (arr->data[current] > arr->data[right])) ){
+		current = right;
 	}
-	if (curr_largest != current){
-		Permut(&arr->data[current], &arr->data[curr_largest]);
-		PercolateDown(arr, curr_largest);
+	if (current != initial){
+		swap(&arr->data[initial], &arr->data[current],&arr->swaps);
+		PercolateDown(arr, end, current);
 	}
+}
+void PercolateDownOPT (dataArray *arr, unsigned long int end, unsigned long int initial) {
+    int current = initial, left, right;
+    while (1) {
+        left=LEFTchild(initial);
+        right=RIGHTchild(initial);
+        if ( ((arr->priority == max) && (left < end) && (arr->data[left] > arr->data[current]))
+          || ((arr->priority == min) && (left < end) && (arr->data[left] < arr->data[current]))) {
+            current = left;
+        }
+        if (((arr->priority == max) && (right < end) && (arr->data[right] > arr->data[current]))
+        ||  ((arr->priority == min) && (right < end) && (arr->data[right] < arr->data[current])) ) {
+            current = right;
+        }
+        if (current == initial) { break; }
+        swap(&arr->data[initial],&arr->data[current],&arr->swaps);
+        initial = current;
+    }
 }
 void BuildHeap(dataArray *arr){//printf("\nBuilding maximal heap\n");
     for (int i = arr->size / 2; i >= 0; i--){
-        PercolateDown(arr, i);
+        PercolateDownOPT(arr, arr->size, i);
     }
 }
 int REMOVE(dataArray *arr){//printf("\nRemoving root element %d from heap\n",data[0]);
 	int removed = arr->data[0];
 	arr->data[0] = arr->data[arr->size - 1];
 	arr->size = arr->size - 1;
-	PercolateDown(arr,0);
+	PercolateDown(arr, arr->size, 0);
 	return removed;
 }
 void ADD(dataArray *arr, int element){//printf("\nAdding element %d to the heap\n",element);
@@ -66,7 +85,7 @@ void k_REMOVE(dataArray *arr, int times){
 			REMOVE(arr);
 		}
 }
-void k_ADD(dataArray *arr, dataArray *elements, unsigned long nr_items){
+void k_ADD(dataArray *arr, dataArray *elements, unsigned long int nr_items){
 	for (int i = 0; i< nr_items; i++){
 		ADD(arr,elements->data[i]);
 	}
