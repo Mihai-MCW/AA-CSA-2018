@@ -1,22 +1,36 @@
 /*******************************************************
 * * * * This file contains the utility functions * * * *
 ********************************************************/
-void readData( FILE *file_in, dataArray *input, int *k ) { // Reading and writing data
-	fscanf(file_in, "%lu", &input->size);
-	fscanf(file_in, "%d", k);
+int readData( FILE *file_in, dataArray *input, int *k ) { // Reading and writing data
+	if (1 != fscanf(file_in, "%lu", &input->size)) { 
+		fprintf(stderr, "Unable to read the size.\n");
+        return 0;
+	}
+	if (1 != fscanf(file_in, "%d", k)) { 
+		fprintf(stderr, "Unable to read k.\n");
+        return 0;
+	}
 	// add more if needed fscanf(file_in, "%type", variable);
 	input->data = (int *)malloc( (input->size) * sizeof(int) );
-	for ( int i = 0; i < input->size; ++i){
-		fscanf( file_in, "%d", &input->data[i] );
+	for ( unsigned long int i = 0; i < input->size; ++i){
+		if (1 != fscanf(file_in, "%d", &input->data[i])) {
+            fprintf(stderr, "Unable to read the number at the position #%lu.\n", i);
+            return 0;
+		}
 	}
+	return 1;
 }
 void loadFile(int argc, char **argv, FILE *file_input, dataArray *input, int *k){
-		if (argc > 2) {	fprintf(stderr, "Error!\nUsage: %s [file]\n", argv[0]);
+		if (argc > 2) {	fprintf(stderr, "Error! -> Usage: %s [file]\n", argv[0]);
 			exit(EXIT_FAILURE);
+		}else if ( argc > 1 ){ file_input = fopen(argv[1], "r"); 
+			if(file_input==NULL){ printf("Error opening the file.\n");
+				exit(EXIT_FAILURE); }
+		} else { fprintf(stderr, "Error! -> Usage: %s [file]\n", argv[0]);
+			exit(EXIT_FAILURE);}
+		if(!readData (file_input, input, k)){ printf("Error reading the file.\n"); 
+			exit(EXIT_FAILURE); 
 		}
-		if ( argc > 1 ){ file_input = fopen(argv[1], "r"); 
-		} else file_input = stdin;
-		readData (file_input, input, k); 
 		input->length = input->size + 5;
 		fclose(file_input);
 }
@@ -33,7 +47,7 @@ void printArray(int arr[],int size){
 };
 void printRange(dataArray *arr,unsigned long int start,unsigned long int end){
 		printf("\n");
-		if (end < arr->size) for( int i = start; i < end; ++i) printf("%d ", arr->data[i]);
+		if (end < arr->size) for( unsigned long int i = start; i < end; ++i) printf("%d ", arr->data[i]);
 		printf("\n");
 }
 void display_tree(int *tablou, int size){

@@ -26,7 +26,7 @@ int main( int argc, char **argv ) {
 
 		{ // Workspace 1
 		int choice = 0;
-		scanf("%d",&choice);
+		printf("Your choice is: ");scanf("%d",&choice);
 
 
 		switch (choice){

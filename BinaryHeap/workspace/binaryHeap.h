@@ -11,17 +11,16 @@ int LEFTchild(int i){
 int RIGHTchild(int i){
 	return 2*i + 2;
 }
-void swap(int *item_1, int *item_2, unsigned long int *times){ // same as Permut()
+void swap(int *item_1, int *item_2, unsigned long int *times){
     int temp = *item_1; 
     *item_1 = *item_2; 
     *item_2 = temp;
     *times = *times +1;
 }
-void permute(int *item_1, int *item_2){ // same as Permut()
+void permute(int *item_1, int *item_2){ // no track of swaps
     int temp = *item_1; 
     *item_1 = *item_2; 
     *item_2 = temp;
-
 }
 void PercolateUp(dataArray *arr, int index){//O(log n)
 	int parent = PARENT(index);

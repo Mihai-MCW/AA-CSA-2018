@@ -4,18 +4,22 @@
 ********************************************************/
 void bubbleSort (dataArray *arr, unsigned long int k) { //O(n^2)
     extern rezStruct result;
-    //bool flag = false;
+    bool flag = false;
+    int times = 0;
     for (unsigned long int i = 0; i < k; i++){
+        flag = false;
         for (unsigned long int j = 0; j < arr->size-i-1; j++){
             if ( (arr->priority == max) && (arr->data[j] > arr->data[j+1]) 
                 || (arr->priority == min) && (arr->data[j] < arr->data[j+1]) ){
                 swap(&arr->data[j], &arr->data[j+1],&arr->swaps);
-                //flag = true;
+                flag = true;
             }
         }
         if (k<=result.size) result.data[i] = arr->data[arr->size -i-1];
-        //if(!flag) break;
+        if(!flag) break;
+        times++;
    }
+   printf("Times the loop was repeated %d",times);
 }
 void reverseBubbleSort (dataArray *arr, unsigned long int k) { //O(n^2)
     extern rezStruct result;
@@ -59,7 +63,7 @@ void quickSort (dataArray *arr,int low,int high) {//O(n^2)
 }
 
 void heapSort (dataArray *arr) {//O(n log(n))
-    BuildHeap(arr); //descending order
+    BuildHeap(arr);
     for (int i = 0; i < arr->size; i++) {
         swap(&arr->data[arr->size-i-1],&arr->data[0],&arr->swaps);
         PercolateDown(arr, arr->size-i-1, 0);
