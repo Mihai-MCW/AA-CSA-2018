@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "definition.h": "c",
+        "stdbool.h": "c",
+        "binaryheap.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c"
+    }
+}
