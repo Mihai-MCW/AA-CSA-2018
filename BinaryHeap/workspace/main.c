@@ -35,8 +35,7 @@ int main( int argc, char **argv ) {
 				duration = clock(); bubbleSort(&workspace,workspace.size);
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = true; PRINTING(workspace, time_ms, k, pd, pr);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
 			case 2:{//ex2 BuildHeap O(n) and k_REMOVE O(k log(n)) Floyd's method
 				dataArray workspace = initDuplicateArrayFrom(input);
 				duration = clock();
@@ -44,8 +43,7 @@ int main( int argc, char **argv ) {
 				k_REMOVE(&workspace,k);
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = true; PRINTING(workspace, time_ms, k, pd, pr);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
 			case 3:{// BuildHeap with ADD O(n log(n)) and k_REMOVE O(k log(n)) Williams’ method O(n log n)
 				dataArray workspace = initEmptyArrayFromExisting(input);
 				duration = clock();
@@ -53,8 +51,7 @@ int main( int argc, char **argv ) {
 				k_REMOVE(&workspace,k);
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = true; PRINTING(workspace, time_ms, k, pd, pr);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
 			case 4:{//HeapSort basic
 				int *result;
 				dataArray workspace = initDuplicateArrayFrom(input);
@@ -63,8 +60,7 @@ int main( int argc, char **argv ) {
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
 				printf("The removed k elem are:\n");printDeleted(workspace,k);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
 			case 5:{//HeapSort with k_REMOVE
 				int *result;
 				dataArray workspace = initDuplicateArrayFrom(input);
@@ -73,8 +69,7 @@ int main( int argc, char **argv ) {
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = false; PRINTING(output, time_ms, k, pd, pr);
 				printf("The removed k elem are:\n");printDeleted(output,k);
-				free(workspace.data); free(output.data);
-				break;}	
+				free(workspace.data); free(output.data); break;}	
 			case 6:{// QuickSort
 				dataArray workspace = initDuplicateArrayFrom(input);
 				duration = clock(); 
@@ -82,8 +77,7 @@ int main( int argc, char **argv ) {
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
 				printf("The removed k elem are:\n"); printDeleted(workspace,k);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
 			case 7:{// mergeSort O(n log n)
 				dataArray workspace = initDuplicateArrayFrom(input);
 				duration = clock(); 
@@ -91,8 +85,15 @@ int main( int argc, char **argv ) {
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
 				printf("The removed k elem are:\n"); printDeleted(workspace,k);
-				free(workspace.data);
-				break;}
+				free(workspace.data); break;}
+			case 8:{ 
+				dataArray workspace = initDuplicateArrayFrom(input);
+				duration = clock();
+				qsort(workspace.data,workspace.size,sizeof(int),qomparator);
+				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
+				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
+				printf("The removed k elem are:\n"); printDeleted(workspace,k);
+				free(workspace.data); break;}
 			default:{break;}
 		}
 		free(input.data); free(result.data);

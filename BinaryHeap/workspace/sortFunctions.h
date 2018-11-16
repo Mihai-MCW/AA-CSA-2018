@@ -109,6 +109,9 @@ void mergeSort (dataArray *arr, unsigned long int left, unsigned long int right)
         merge(arr, left, middle, right);
     }
 }
+int qomparator(const void * a, const void * b) {
+		return ( *(int*)a - *(int*)b );
+	}
 /*******************************************************
 * * * * * * * * * * Unused functions * * * * * * * * * *
 ********************************************************/
