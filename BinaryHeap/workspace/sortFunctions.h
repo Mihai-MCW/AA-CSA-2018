@@ -62,7 +62,7 @@ void quickSort (dataArray *arr,int low,int high) {//O(n^2)
     }
 }
 
-void heapSort (dataArray *arr) {//O(n log(n))
+void heapSort (dataArray *arr) {//O(n log(n)) = O(n) + O (n log n)
     BuildHeap(arr);
     for (int i = 0; i < arr->size; i++) {
         swap(&arr->data[arr->size-i-1],&arr->data[0],&arr->swaps);
@@ -76,8 +76,38 @@ void heapSortRemove(dataArray *input, dataArray *output, unsigned long int k){//
         output->data[k-i-1] = REMOVE(input,0); //ascending order
     } output->swaps = input->swaps;
 }
-void mergeSort () {//O(n log n)
+void merge(dataArray *arr, unsigned long int left,unsigned long int middle,unsigned long int right){
+    unsigned long int i,j,k, 
+        sizeL = middle -left +1, 
+        sizeR = right - middle;
+    int L[sizeL], R[sizeR];
+    for (i = 0; i< sizeL; i++){
+        L[i] = arr->data[left +i];
+    }
+    for(j = 0; j < sizeR; j++){
+        R[j] = arr->data[middle +j +1];
+    }
+    i = 0; j = 0; k = left;
 
+    while(i < sizeL && j < sizeR){
+        if(L[i] <= R[j]){
+            arr->data[k] = L[i]; i++;
+        }
+        else {
+            arr->data[k] = R[j]; j++; 
+        }
+        k++;
+    }
+    while(i < sizeL){ arr->data[k] = L[i]; i++; k++; }
+    while(j < sizeR){ arr->data[k] = R[j]; j++; k++; }
+}
+void mergeSort (dataArray *arr, unsigned long int left, unsigned long int right) {//O(n log n)
+    if(left < right){
+        unsigned long int middle = left + (right-left)/2;
+        mergeSort(arr,left,middle);
+        mergeSort(arr,middle+1,right);
+        merge(arr, left, middle, right);
+    }
 }
 /*******************************************************
 * * * * * * * * * * Unused functions * * * * * * * * * *

@@ -94,13 +94,13 @@ void ADD(dataArray *arr, int element){//O(log(n))
 		PercolateUp(arr, arr->size -1);
 	}
 }
-void k_REMOVE(dataArray *arr, int times){
+void k_REMOVE(dataArray *arr, int times){//O(klog(n))
 	extern rezStruct result;
 	for (int i = 0; i < times; i++){
 			result.data[i] = REMOVE(arr,0);
 		}
 }
-void k_ADD(dataArray *arr, dataArray elements, unsigned long int nr_items){
+void k_ADD(dataArray *arr, dataArray elements, unsigned long int nr_items){// O(klog(n))
 	for (int i = 0; i< nr_items; i++){
 		ADD(arr,elements.data[i]);
 	}

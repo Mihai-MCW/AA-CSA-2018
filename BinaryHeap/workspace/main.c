@@ -37,7 +37,7 @@ int main( int argc, char **argv ) {
 				bool pd = false, pr = true; PRINTING(workspace, time_ms, k, pd, pr);
 				free(workspace.data);
 				break;}
-			case 2:{//ex2 BuildHeap O(n) and k_REMOVE O(log(n)) Floyd's method
+			case 2:{//ex2 BuildHeap O(n) and k_REMOVE O(k log(n)) Floyd's method
 				dataArray workspace = initDuplicateArrayFrom(input);
 				duration = clock();
 				BuildHeap(&workspace); printf("Built Heap");//printData(workspace);
@@ -46,7 +46,7 @@ int main( int argc, char **argv ) {
 				bool pd = false, pr = true; PRINTING(workspace, time_ms, k, pd, pr);
 				free(workspace.data);
 				break;}
-			case 3:{// BuildHeap with ADD O(n log(n)) and k_REMOVE O(k log(n)) Williams’ method
+			case 3:{// BuildHeap with ADD O(n log(n)) and k_REMOVE O(k log(n)) Williams’ method O(n log n)
 				dataArray workspace = initEmptyArrayFromExisting(input);
 				duration = clock();
 				k_ADD(&workspace,input,input.size); printf("Built Heap");// printData(workspace);
@@ -79,6 +79,15 @@ int main( int argc, char **argv ) {
 				dataArray workspace = initDuplicateArrayFrom(input);
 				duration = clock(); 
 				quickSort(&workspace, 0, workspace.size - 1);
+				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
+				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
+				printf("The removed k elem are:\n"); printDeleted(workspace,k);
+				free(workspace.data);
+				break;}
+			case 7:{// mergeSort O(n log n)
+				dataArray workspace = initDuplicateArrayFrom(input);
+				duration = clock(); 
+				mergeSort (&workspace, 0, workspace.size-1);
 				duration = clock() - duration; time_ms = duration / (double) CLOCKS_PER_SEC * 1000 ;
 				bool pd = false, pr = false; PRINTING(workspace, time_ms, k, pd, pr);
 				printf("The removed k elem are:\n"); printDeleted(workspace,k);
