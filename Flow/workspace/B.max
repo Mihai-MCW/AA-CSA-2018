@@ -1,0 +1,30 @@
+c Exercice B
+c Nodes Arcs
+p max  8     14
+c source node number
+n	1 s
+c sink node number
+n	8 t
+c Arc description
+a	1 2	350
+a	1 3	350
+c C1 to A and B
+a	2 4	80
+a	2 5	120
+c C2 to B and C
+a	3 5	60
+a	3 6	70
+c A to t
+a	4 8	70
+c B to D and t
+a	5 8	70
+a	5 7	80
+c C to B and t
+a	6 5	20
+a	6 8	60
+c D to t
+a	7 8	40
+a	7 8	50
+a	7 8	60
+c finished all nodes
+
